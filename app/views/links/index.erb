@@ -16,7 +16,7 @@
       <% link.tags.map do |tag| %>
         <a href="/tags/<%= tag.name %>"><span class="label label-default"><%= tag.name %></span></a>
       <% end %>
-      <a href="<%= link.url %>" class="btn btn-primary btn-xs visit-url" role="button">Visit</a>
+      <a href="<%= link.url %>" class="btn btn-primary btn-xs visit-url" role="button" target="_/blank">Visit</a>
     </div>
   </div>
 </div>
