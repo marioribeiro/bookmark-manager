@@ -10,7 +10,7 @@ class BookmarkManager < Sinatra::Base
   end
   
   get '/links' do
-    @links = Link.all
+    @links = Link.all(:order => [:title.asc])
     erb :'links/index'
   end
 
