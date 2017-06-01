@@ -2,6 +2,7 @@ ENV["RACK_ENV"] ||= "development"
 
 require 'sinatra'
 require_relative 'data_mapper_setup'
+require 'link_thumbnailer'
 
 class BookmarkManager < Sinatra::Base
 
@@ -25,7 +26,8 @@ class BookmarkManager < Sinatra::Base
   end
   
   post '/links' do
-    link = Link.create(url: params[:url], title: params[:title])
+    scrape = LinkThumbnailer.generate(params[:url], redirect_limit: 5, user_agent: 'foo')
+    link = Link.create(url: params[:url], title: params[:title], description: scrape.description, image: scrape.images.first.src.to_s)
     params[:tags].split.each do |tag|
       link.tags << Tag.first_or_create(name: tag)
     end
