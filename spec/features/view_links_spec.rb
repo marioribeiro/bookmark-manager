@@ -3,7 +3,7 @@ feature 'View links' do
     Link.create(url: 'http://www.makersacademy.com', title: 'Makers Academy')
     visit '/links'
     expect(page.status_code).to eq 200
-    within 'ul#links' do
+    within 'div#links' do
       expect(page).to have_content('Makers Academy')
     end
   end
@@ -17,9 +17,8 @@ feature 'View links' do
 
   scenario 'I can filter links by tag' do
     visit '/tags/bubbles'
-
     expect(page.status_code).to eq(200)
-    within 'ul#links' do
+    within 'div#links' do
       expect(page).not_to have_content('Makers Academy')
       expect(page).not_to have_content('Code.org')
       expect(page).to have_content('This is Zombocom')

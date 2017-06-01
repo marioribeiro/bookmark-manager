@@ -5,7 +5,7 @@ feature 'Creating links' do
     fill_in 'title', with: "Mario Ribeiro's website"
     click_button 'Create Link'
     expect(current_path).to eq '/links'
-    within 'ul#links' do
+    within 'div#links' do
       expect(page).to have_content("Mario Ribeiro's website")
     end
   end
