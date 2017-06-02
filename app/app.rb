@@ -1,10 +1,13 @@
 ENV["RACK_ENV"] ||= "development"
 
 require 'sinatra'
+require 'sinatra/flash'
 require_relative 'data_mapper_setup'
 require 'link_thumbnailer'
 
 class BookmarkManager < Sinatra::Base
+
+  register Sinatra::Flash
 
   enable :sessions
   set :session_secret, 'makers'
@@ -16,10 +19,12 @@ class BookmarkManager < Sinatra::Base
   end
 
   get '/' do
+    @user = current_user
     erb :index
   end
   
   get '/links' do
+    current_user
     @links = Link.all(:order => [:title.asc])
     erb :'links/index'
   end
@@ -51,14 +56,19 @@ class BookmarkManager < Sinatra::Base
   end
 
   get '/users/new' do
+    @user = User.new
     erb :'users/new'
   end
 
   post '/users' do
-    User.create(email: params[:email],
-                password: params[:password])
-    session[:user_id] = user.id
-    redirect to('/links')
-end
-
+    @user = User.new(email: params[:email],
+                     password: params[:password])
+    if @user.save
+      session[:user_id] = @user.id
+      redirect to('/')
+    else
+      flash.now[:notice] = "Error - Account was not created"
+      erb :'users/new'
+    end
+  end
 end
