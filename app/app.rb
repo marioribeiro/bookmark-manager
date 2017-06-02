@@ -26,9 +26,10 @@ class BookmarkManager < Sinatra::Base
   end
   
   post '/links' do
+    p params
     scrape = LinkThumbnailer.generate(params[:url], redirect_limit: 5, user_agent: 'foo')
     link = Link.create(url: params[:url], title: params[:title], description: scrape.description, image: scrape.images.first.src.to_s)
-    params[:tags].split.each do |tag|
+    params[:tags].split(',').each do |tag|
       link.tags << Tag.first_or_create(name: tag)
     end
     link.save
