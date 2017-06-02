@@ -65,9 +65,9 @@ class BookmarkManager < Sinatra::Base
                      password: params[:password])
     if @user.save
       session[:user_id] = @user.id
-      redirect to('/')
+      redirect to('/links')
     else
-      flash.now[:notice] = "Error - Account was not created"
+      flash.now[:errors] = @user.errors.full_messages
       erb :'users/new'
     end
   end
