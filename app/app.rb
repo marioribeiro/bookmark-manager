@@ -6,6 +6,15 @@ require 'link_thumbnailer'
 
 class BookmarkManager < Sinatra::Base
 
+  enable :sessions
+  set :session_secret, 'makers'
+
+  helpers do
+    def current_user
+      @current_user ||= User.get(session[:user_id])
+    end
+  end
+
   get '/' do
     erb :index
   end
@@ -40,5 +49,16 @@ class BookmarkManager < Sinatra::Base
     link.destroy!
     redirect to('/links')
   end
+
+  get '/users/new' do
+    erb :'users/new'
+  end
+
+  post '/users' do
+    User.create(email: params[:email],
+                password: params[:password])
+    session[:user_id] = user.id
+    redirect to('/links')
+end
 
 end
