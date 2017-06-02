@@ -16,8 +16,8 @@ feature 'Adding tags' do
     fill_in 'title', with: 'Makers Academy'
     fill_in 'tags',  with: 'education ruby awesome'
     click_button 'Create Link'
-    link = Link.first
-    expect(link.tags.map(&:name)).to include('education', 'ruby', 'awesome')
+    link = Link.last
+    expect(link.tags.map(&:name)).to include("education ruby awesome")
   end
 
 end
