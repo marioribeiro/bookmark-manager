@@ -26,7 +26,6 @@ class BookmarkManager < Sinatra::Base
   end
   
   post '/links' do
-    p params
     scrape = LinkThumbnailer.generate(params[:url], redirect_limit: 5, user_agent: 'foo')
     link = Link.create(url: params[:url], title: params[:title], description: scrape.description, image: scrape.images.first.src.to_s)
     params[:tags].split(',').each do |tag|
@@ -37,8 +36,8 @@ class BookmarkManager < Sinatra::Base
   end
 
   get '/links/delete/:id' do
-    p link = Link.get(params[:id])
-    p link.destroy!
+    link = Link.get(params[:id])
+    link.destroy!
     redirect to('/links')
   end
 
