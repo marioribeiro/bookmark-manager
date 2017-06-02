@@ -35,4 +35,10 @@ class BookmarkManager < Sinatra::Base
     redirect to('/links')
   end
 
+  get '/links/delete/:id' do
+    p link = Link.get(params[:id])
+    p link.destroy!
+    redirect to('/links')
+  end
+
 end
