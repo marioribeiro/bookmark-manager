@@ -135,6 +135,8 @@ GEM
       tilt (~> 2.0)
     sinatra-flash (0.3.0)
       sinatra (>= 1.0.0)
+    sinatra-partial (0.4.0)
+      sinatra
     stringex (1.5.1)
     thread_safe (0.3.6)
     tilt (2.0.7)
@@ -164,6 +166,7 @@ DEPENDENCIES
   rspec
   sinatra
   sinatra-flash
+  sinatra-partial
 
 RUBY VERSION
    ruby 2.4.1p111

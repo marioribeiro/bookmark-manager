@@ -38,29 +38,9 @@
       </div>
     </nav>
     <div class="container">
-    <% if flash[:notice] %>
-      <div id='notice'>
-        <%= flash[:notice] %>
-      </div>
-    <% end %>
-    <% if flash[:errors] && !flash[:errors].empty? %>
-      Please refer to the following errors below:
-      <ul id='errors'>
-      <% flash[:errors].each do |error| %>
-        <li><%= error %></li>
-      <% end %>
-      </ul>
-    <% end %>
-     <% if current_user %>
-      Welcome, <%= current_user.email %>
-      <form method='post' action='/sessions'>
-        <input type='hidden' name='_method' value='delete'>
-        <input type='submit' value='Sign out'>
-      </form>
-    <% end %>
-      <div>
+        <%= partial :welcome %>
+        <%= partial :flash %>
         <%= yield %>
-      </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
