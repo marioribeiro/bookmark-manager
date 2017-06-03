@@ -3,11 +3,15 @@ ENV["RACK_ENV"] = "test"
 require 'capybara/rspec'
 require 'database_cleaner'
 require './app/app'
+require_relative 'helpers/session'
 require 'web_helper'
+
 
 Capybara.app = BookmarkManager
 
 RSpec.configure do |config|
+
+  config.include SessionHelpers
 
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true

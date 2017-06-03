@@ -31,12 +31,18 @@
             <li><a href="#">Home</a></li>
             <li><a href="/links">Links</a></li>
             <li><a href="/links/new">Add Link</a></li>
+            <li><a href="/sessions/new">Signin</a></li>
             <li><a href="/users/new">Signup</a></li>
           </ul>
         </div>     
       </div>
     </nav>
     <div class="container">
+    <% if flash[:notice] %>
+      <div id='notice'>
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
     <% if flash[:errors] && !flash[:errors].empty? %>
       Please refer to the following errors below:
       <ul id='errors'>
@@ -45,10 +51,12 @@
       <% end %>
       </ul>
     <% end %>
-    <% if current_user %>
-      <div class="welcome">
-        <h3>Welcome, <%= @current_user.email %></h3>
-      </div>
+     <% if current_user %>
+      Welcome, <%= current_user.email %>
+      <form method='post' action='/sessions'>
+        <input type='hidden' name='_method' value='delete'>
+        <input type='submit' value='Sign out'>
+      </form>
     <% end %>
       <div>
         <%= yield %>
